@@ -31,7 +31,6 @@ module Sinatra
     def stylesheet_link_tag(string_or_array, *args)
       files = string_or_array.is_a?(Array) ? string_or_array : [string_or_array]
       options = {
-        :charset => "utf-8",
         :media => "screen, projection",
         :rel => "stylesheet",
         :type => "text/css",
