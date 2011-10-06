@@ -12,7 +12,6 @@ module Sinatra
     def javascript_include_tag(string_or_array, *args)
       files = string_or_array.is_a?(Array) ? string_or_array : [string_or_array]
       options = {
-        :charset => "utf-8",
         :type => "text/javascript",
       }.merge(args.extract_options!)
 
