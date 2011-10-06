@@ -25,11 +25,11 @@ EOD
     get '/javascript_include_tag', {}, 'SCRIPT_NAME' => '/bar'
     assert last_response.ok?
     assert_equal last_response.body,  <<EOD
-<script charset="utf-8" src="/bar/javascripts/summer.js" type="text/javascript"></script>
-<script charset="utf-8" src="http://example.com/autumn.js" type="text/javascript"></script>
-<script charset="utf-8" src="/bar/javascripts/day.js" type="text/javascript"></script>
-<script charset="utf-8" src="/bar/javascripts/night.js" type="text/javascript"></script>
-<script charset="utf-8" src="/bar/evening.js" type="text/javascript"></script>
+<script src="/bar/javascripts/summer.js" type="text/javascript"></script>
+<script src="http://example.com/autumn.js" type="text/javascript"></script>
+<script src="/bar/javascripts/day.js" type="text/javascript"></script>
+<script src="/bar/javascripts/night.js" type="text/javascript"></script>
+<script src="/bar/evening.js" type="text/javascript"></script>
 EOD
   end
 
