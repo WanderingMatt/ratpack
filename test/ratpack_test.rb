@@ -37,10 +37,10 @@ EOD
     get '/stylesheet_link_tag', {}, 'SCRIPT_NAME' => '/bar'
     assert last_response.ok?
     assert_equal last_response.body,  <<EOD
-<link charset="utf-8" href="/bar/stylesheets/winter.css" media="projection" rel="stylesheet" type="text/css" />
-<link charset="utf-8" href="/bar/stylesheets/summer.css" media="projection" rel="stylesheet" type="text/css" />
-<link charset="utf-8" href="http://example.com/autumn.css" media="screen, projection" rel="stylesheet" type="text/css" />
-<link charset="utf-8" href="/bar/spring.css" media="screen, projection" rel="stylesheet" type="text/css" />
+<link href="/bar/stylesheets/winter.css" media="projection" rel="stylesheet" type="text/css" />
+<link href="/bar/stylesheets/summer.css" media="projection" rel="stylesheet" type="text/css" />
+<link href="http://example.com/autumn.css" media="screen, projection" rel="stylesheet" type="text/css" />
+<link href="/bar/spring.css" media="screen, projection" rel="stylesheet" type="text/css" />
 EOD
   end
   
