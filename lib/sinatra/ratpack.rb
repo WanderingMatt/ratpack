@@ -68,7 +68,8 @@ module Sinatra
     
     def favicon_link_tag(src='favicon.ico', options={:type => 'image/ico', :rel => 'shortcut icon'})
       path = image_path(src)
-      tag(:link, options.merge(:src => path))
+      options[:src] = url_for(path)
+      tag(:link, options)
     end
 
     def font_path(src)
@@ -133,7 +134,7 @@ module Sinatra
     end 
 
     def asset_path(src)
-      "/#{self.class.settings.asset_prefix}/#{src}"
+      "#{self.class.settings.asset_host}/#{self.class.settings.asset_prefix}/#{src}"
     end
 
   end
