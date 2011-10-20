@@ -17,10 +17,14 @@ module Sinatra
 
       files.map do |file|
         path = "#{ file.gsub(/\.js/i, "") }.js" # Append .js if needed
-        path = "/javascripts/#{path}" unless path =~ %r((^/)|(://)) # Prepend javascripts directory to path if not a full URL or the root is specified
+        path = javascript_path(path) unless path =~ %r((^/)|(://)) # Prepend javascripts directory to path if not a full URL or the root is specified
         options[:src] = url_for(path)
         content_tag(:script, "", options)
       end.join("\n")
+    end
+
+    def javascript_path(src)
+      asset_path("javascripts/#{src}")
     end
   
     # Accepts a single filename or an array of filenames (with or without .css extension)
@@ -38,10 +42,14 @@ module Sinatra
 
       files.map do |file|
         path = "#{ file.gsub(/\.css/i, "") }.css" # Append .css if needed
-        path = "/stylesheets/#{path}" unless path =~ %r((^/)|(://)) # Prepend stylesheets directory to path if not a full URL or the root is specified
+        path = stylesheet_path(path) unless path =~ %r((^/)|(://)) # Prepend stylesheets directory to path if not a full URL or the root is specified
         options[:href] = url_for(path)
-        tag(:link, options)        
+        tag(:link, options)
       end.join("\n")
+    end
+
+    def stylesheet_path(src)
+      asset_path("stylesheets/#{src}")
     end
         
     # Accepts a full URL, an image filename, or a path underneath /public/images/
@@ -49,9 +57,22 @@ module Sinatra
     #   image_tag "pony.png"                        # <image src="/images/pony.png" />
     #   image_tag "http://foo.com/pony.png"         # <image src="http://foo.com/pony.png" />
     def image_tag(src, options={})
-      src = "/images/#{src}" unless src.include? "://" # Add images directory to path if not a full URL
+      src = image_path(src) unless src.include? "://" # Add images directory to path if not a full URL
       options[:src] = url_for(src)
       tag(:img, options)
+    end
+
+    def image_path(src)
+      asset_path("images/#{src}")
+    end
+    
+    def favicon_link_tag(src='favicon.ico', options={:type => 'image/ico', :rel => 'shortcut icon'})
+      path = image_path(src)
+      tag(:link, options.merge(:src => path))
+    end
+
+    def font_path(src)
+      asset_path("fonts/#{src}")
     end
     
     # Works like link_to, but href is optional. If no href supplied, content is used as href
@@ -110,6 +131,10 @@ module Sinatra
       end
       "#{base}#{url_fragment}"
     end 
+
+    def asset_path(src)
+      "/#{self.class.settings.asset_prefix}/#{src}"
+    end
 
   end
 
